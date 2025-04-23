@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GA Notas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="login-container">
+    <h2>Entrar</h2>
+    <input type="email" id="email" placeholder="E-mail" />
+    <input type="password" id="password" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+    <button onclick="signup()">Cadastrar</button>
+  </div>
+
+  <div id="app-container" style="display:none;">
+    <header>
+      <h1>Meus Módulos</h1>
+      <button onclick="logout()">Sair</button>
+    </header>
+    <div>
+  <label for="modules-select">Escolha um módulo:</label>
+  <select id="modules-select" onchange="onModuleSelect()">
+    <option value="">Selecione...</option>
+  </select>
+</div>
+
+    <div id="note-area">
+      <textarea id="note-content" placeholder="Digite aqui..."></textarea>
+      <button onclick="saveNote()">Salvar</button>
+    </div>
+    <div id="new-module">
+      <input type="text" id="new-module-name" placeholder="Novo módulo" />
+      <button onclick="addModule()">Adicionar Módulo</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
