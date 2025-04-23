@@ -75,7 +75,7 @@ async function loadNote(mod) {
     .eq('user_id', user.id)
     .eq('modulo', mod)
     .limit(1)
-    .maybeSingle(); // 👈 substitui o .single() para evitar erro se houver mais de uma
+    .maybeSingle();
 
   console.log("Resultado do loadNote:", { data, error });
 
@@ -84,8 +84,11 @@ async function loadNote(mod) {
     return;
   }
 
+  console.log("Conteúdo retornado:", data?.conteudo); // 👈 ADICIONE ESTA LINHA
+
   document.getElementById('note-content').value = data?.conteudo || '';
 }
+
 
 
 async function saveNote() {
