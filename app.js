@@ -66,15 +66,27 @@ function onModuleSelect() {
 }
 
 async function loadNote(mod) {
+  console.log("Carregando nota do módulo:", mod);
+
   currentModule = mod;
   const { data, error } = await supabaseClient
     .from('notas')
     .select('conteudo')
     .eq('user_id', user.id)
     .eq('modulo', mod)
-    .single();
+    .limit(1)
+    .maybeSingle(); // 👈 substitui o .single() para evitar erro se houver mais de uma
+
+  console.log("Resultado do loadNote:", { data, error });
+
+  if (error) {
+    alert("Erro ao carregar nota: " + error.message);
+    return;
+  }
+
   document.getElementById('note-content').value = data?.conteudo || '';
 }
+
 
 async function saveNote() {
   const content = document.getElementById('note-content').value;
@@ -90,7 +102,6 @@ async function addModule() {
   const name = document.getElementById('new-module-name').value;
   if (!name) return alert("Digite o nome do módulo");
 
-  // Cria módulo vazio diretamente no Supabase
   const { error } = await supabaseClient
     .from('notas')
     .upsert({ user_id: user.id, modulo: name, conteudo: "" });
@@ -101,4 +112,6 @@ async function addModule() {
   document.getElementById('modules-select').value = name;
   document.getElementById('note-content').value = "";
   loadModules();
+  loadNote(name); // 👉 ADICIONE ESTA LINHA AQUI
 }
+
